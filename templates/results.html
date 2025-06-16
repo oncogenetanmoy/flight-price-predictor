@@ -12,7 +12,28 @@
 <body>
     <h1>Flight Price Prediction Result</h1>
 
-    <img src="{{ url_for('static', filename='images/' + destination_image) }}" alt="Image of Destination City" class="destination-image">
+    <!-- Container for journey images and text -->
+    <div class="journey-info-container">
+        <div class="city-journey">
+            <h2>Departure</h2>
+            <p class="city-name">{{ departure_city_name }}</p>
+            <img src="{{ url_for('static', filename='images/' + departure_image) }}" alt="Image of Departure City" class="city-image">
+        </div>
+
+        <div class="journey-arrow">
+             <!-- You could add an arrow icon or text here later -->
+             &rarr; <!-- HTML entity for a right arrow -->
+        </div>
+
+        <div class="city-journey">
+            <h2>Destination</h2>
+            <p class="city-name">{{ destination_city_name }}</p>
+            <img src="{{ url_for('static', filename='images/' + destination_image) }}" alt="Image of Destination City" class="city-image">
+        </div>
+    </div>
+
+    <!-- More sophisticated journey text -->
+    <p class="journey-description">Your predicted journey is from **{{ departure_city_name }}** to **{{ destination_city_name }}**.</p>
 
 
     <div class="result-container">
