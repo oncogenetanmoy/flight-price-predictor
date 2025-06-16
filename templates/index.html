@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Price Predictor</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital@1&display=swap');
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Predict Flight Price</h1>
+
+    <!-- Main content wrapper for layout -->
+    <div class="main-content-wrapper">
+
+        <!-- Left side content -->
+        <div>
+            <div class="city-list">
+                <h2>Available Departure Cities:</h2>
+                <ul>
+                    {% for city in available_sources %}
+                        <li>{{ city }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h2>Available Destination Cities:</h2>
+                <ul>
+                    {% for city in available_destinations %}
+                        <li>{{ city }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <form action="/predict" method="post">
+                <div>
+                    <label for="source">Departure City:</label>
+                    <input type="text" id="source" name="source" required>
+                </div>
+                <br>
+                <div>
+                    <label for="destination">Destination City:</label>
+                    <input type="text" id="destination" name="destination" required>
+                </div>
+                <br>
+                <div>
+                    <label for="departure_datetime">Departure Date and Time (YYYY-MM-DD HH:MM):</label>
+                    <input type="datetime-local" id="departure_datetime" name="departure_datetime" required>
+                </div>
+                <br>
+                 <div>
+                    <label for="arrival_datetime">Arrival Date and Time (YYYY-MM-DD HH:MM):</label>
+                    <input type="datetime-local" id="arrival_datetime" name="arrival_datetime" required>
+                </div>
+                <br>
+                <div>
+                    <label for="total_stops">Total Stops (0 for non-stop):</label>
+                    <input type="number" id="total_stops" name="total_stops" min="0" required>
+                </div>
+                <br>
+                <button type="submit">Predict Price</button>
+            </form>
+        </div>
+
+
+        <!-- Container for toggling images (Right side) -->
+        <div class="homepage-images-container">
+            <img src="{{ url_for('static', filename='images/plane.jpg') }}" alt="Image of plane" class="homepage-image active">
+            <img src="{{ url_for('static', filename='images/new_delhi.jpg') }}" alt="Image of New Delhi" class="homepage-image">
+            <img src="{{ url_for('static', filename='images/kolkata.jpg') }}" alt="Image of Kolkata" class="homepage-image">
+            <img src="{{ url_for('static', filename='images/banglore.jpg') }}" alt="Image of Bangalore" class="homepage-image">
+            <img src="{{ url_for('static', filename='images/cochin.jpg') }}" alt="Image of Cochin" class="homepage-image">
+            <img src="{{ url_for('static', filename='images/delhi.jpg') }}" alt="Image of Delhi" class="homepage-image">
+            <img src="{{ url_for('static', filename='images/hyderabad.jpg') }}" alt="Image of Hyderabad" class="homepage-image">
+            <!-- Add more <img> tags here for each homepage image you have -->
+        </div>
+
+    </div> <!-- End of main-content-wrapper -->
+
+
+    <div class="team-info">
+        <p>Made By <span class="neon-green">Tanmoy Chowdhury, Joysurya Bhowmik, Suman Shit, Snehlata K.</span> with &hearts;</p>
+        <p>Dept. of CSE(AI & ML), Bengal Institute of Technology</p>
+    </div>
+
+    <!-- Link to your JavaScript file -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

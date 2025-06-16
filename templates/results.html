@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Price Prediction Result</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital@1&display=swap');
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Flight Price Prediction Result</h1>
+
+    <img src="{{ url_for('static', filename='images/' + destination_image) }}" alt="Image of Destination City" class="destination-image">
+
+
+    <div class="result-container">
+        <p class="result-text">Predicted Price: ₹{{ predicted_price }}</p>
+        {% if holiday_message %}
+            <p class="result-text">{{ holiday_message }}</p>
+        {% endif %}
+        <p class="result-text">Suggested Airline: {{ suggested_airline }}</p>
+    </div>
+
+    <p class="happy-journey">Happy Journey!</p>
+
+    <br>
+    <a href="/">Go back to the predictor</a>
+
+    <div class="team-info">
+        <p>Made By <span class="neon-green">Tanmoy Chowdhury, Joysurya Bhowmik, Suman Shit, Snehlata K.</span> with &hearts;</p>
+        <p>Dept. of CSE(AI & ML), Bengal Institute of Technology</p>
+    </div>
+
+</body>
+</html>
