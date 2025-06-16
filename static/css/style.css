@@ -20,6 +20,7 @@ h1 {
     font-size: 60px;
     margin-bottom: 30px; /* Add space below heading */
 }
+
 /* Add a class to a wrapper around your form and city list */
 /* In index.html, wrap your .city-list and form in <div class="main-content-wrapper">...</div> */
 .main-content-wrapper {
@@ -28,11 +29,12 @@ h1 {
     max-width: 1200px; /* Optional: Limit the maximum width of the content area */
     margin: 20px auto; /* Center the wrapper if max-width is set */
     gap: 40px; /* Add space between the content and image container */
-    flex-wrap: wrap; /* Allow content and images to wrap on smaller screens */
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
 }
 
 /* Adjust margins for the blocks within the wrapper */
-.city-list, form {
+/* Assuming your form and city list are direct children or wrapped in a div like in the index.html I provided */
+.city-list, form, .main-content-wrapper > div {
     margin: 0; /* Remove previous margins */
     flex: 1; /* Allow these items to grow and shrink */
     min-width: 300px; /* Ensure they don't get too small */
@@ -72,6 +74,7 @@ h1 {
 /* .homepage-image.hidden {
     display: none; /* Alternative way to hide, less smooth for transitions */
 /* } */
+
 /* Style the form container */
 form {
     max-width: 500px;
@@ -195,6 +198,8 @@ button[type="submit"]:hover {
     display: inline-block; /* Required for transform/animation */
     animation: wave 2s infinite; /* Apply the waving animation */
     transform-origin: 70% 70%; /* Set the origin for the wave */
+    text-align: center; /* Ensure text is centered if it's a block element */
+    width: 100%; /* Take full width if display is block */
 }
 
 
@@ -262,12 +267,65 @@ a:hover {
 .team-info .neon-green {
     color: #00FF00; /* Neon Green color for the names */
     font-weight: bold;
-/* Style for the destination city image */
-.destination-image {
-    max-width: 100%; /* Ensure the image is not wider than its container */
-    height: auto; /* Maintain aspect ratio */
-    display: block; /* Make it a block element to control margin */
-    margin: 20px auto; /* Center the image and add vertical margin */
-    border-radius: 8px; /* Optional: Add rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow */
 }
+
+/* --- New Styles for Results Page Journey Info --- */
+
+/* Container for journey images and text */
+.journey-info-container {
+    display: flex; /* Use Flexbox to arrange items side-by-side */
+    justify-content: center; /* Center the flex items horizontally */
+    align-items: center; /* Vertically align items in the center */
+    gap: 30px; /* Add space between the city blocks and the arrow */
+    margin: 30px auto; /* Center the container itself and add vertical margin */
+    max-width: 800px; /* Optional: Limit the max width */
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+}
+
+/* Container for each city's image and text */
+.city-journey {
+    text-align: center; /* Center content within each city block */
+    flex: 1; /* Allow city blocks to grow and shrink */
+    min-width: 150px; /* Ensure minimum width */
+}
+
+.city-journey h2 {
+     color: #8A2BE2; /* Blue Violet heading for city */
+     font-size: 1.8em; /* Larger heading */
+     margin-bottom: 10px;
+     margin-top: 0;
+}
+
+.city-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Style for the city images */
+.city-image {
+    max-width: 200px; /* Set a max width for the images */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the arrow between cities */
+.journey-arrow {
+    font-size: 3em; /* Make the arrow large */
+    color: #8A2BE2; /* Blue Violet color for the arrow */
+    font-weight: bold;
+    margin-bottom: 30px; /* Add some margin below the arrow if items wrap */
+}
+
+/* Style for the sophisticated journey description text */
+.journey-description {
+    font-size: 1.4em; /* Make the text larger */
+    text-align: center; /* Center the text */
+    margin: 20px auto; /* Add vertical margin and center */
+    max-width: 700px; /* Limit the width for readability */
+    color: #555; /* Darker color for description */
+}
+
+/* --- End New Styles --- */
