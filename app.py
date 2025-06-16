@@ -19,7 +19,7 @@ except FileNotFoundError:
 
 # Load the dataset to get unique cities (and potentially other data if needed later)
 try:
-    df = pd.read_csv(r"C:\Users\LENOVO\Downloads\your_output.csv") # Use the correct path
+    df = pd.read_csv("your_output.csv") # Use the correct path
     available_sources = sorted(df['Source'].unique().tolist()) # Get unique source cities and sort them
     available_destinations = sorted(df['Destination'].unique().tolist()) # Get unique destination cities and sort them
     print("Dataset loaded and unique cities extracted.")
