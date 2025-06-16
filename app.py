@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 import random
+import os # Import the os module
 
 app = Flask(__name__)
 
@@ -19,12 +20,29 @@ except FileNotFoundError:
 
 # Load the dataset to get unique cities (and potentially other data if needed later)
 try:
-    df = pd.read_csv("your_output.csv") # Use the correct path
+    # --- Debugging Print Statements (Optional for deployment) ---
+    # print(f"Attempting to load dataset from path: your_output.csv") # Print the path being used
+    # print(f"Current working directory: {os.getcwd()}") # Print the current working directory
+
+    # # List files in the current directory
+    # print("Files in current directory:")
+    # try:
+    #     for item in os.listdir('.')[:-1]: # Avoid printing potentially large model files
+    #         print(item)
+    # except Exception as e:
+    #     print(f"Error listing files: {e}")
+    # # ---------------------------------
+
+    df = pd.read_csv("your_output.csv") # Use the relative path for deployment
     available_sources = sorted(df['Source'].unique().tolist()) # Get unique source cities and sort them
     available_destinations = sorted(df['Destination'].unique().tolist()) # Get unique destination cities and sort them
     print("Dataset loaded and unique cities extracted.")
 except FileNotFoundError:
     print("Error loading dataset. Make sure 'your_output.csv' is in the correct path.")
+    available_sources = []
+    available_destinations = []
+except Exception as e:
+    print(f"An unexpected error occurred during dataset loading: {e}")
     available_sources = []
     available_destinations = []
 
@@ -47,14 +65,18 @@ holidays = {
     (11, 5): "Guru Nanak Jayanti", (11, 24): "Guru Tegh Bahadur's Martyrdom Day", (12, 24): "Christmas Eve", (12, 25): "Christmas"
 }
 
-# Dictionary to map destination cities to image filenames
+# Dictionary to map cities (source or destination) to image filenames
+# Ensure you have images for ALL possible source and destination cities
 destination_images = {
-    'New Delhi': 'new_delhi.jpg', # Update with your actual filenames
+    'New Delhi': 'new_delhi.jpg', # Update with your actual filenames and ensure images exist
     'Banglore': 'banglore.jpg',
-    'Cochin': 'cochin.jpeg',
+    'Cochin': 'cochin.jpg',
     'Kolkata': 'kolkata.jpg',
-    'Delhi': 'delhi.png',
-    'Hyderabad': 'hyderabad.jpg'
+    'Delhi': 'delhi.jpg',
+    'Hyderabad': 'hyderabad.jpg',
+    # Add entries for any source cities that are not also destinations if needed
+    # 'Mumbai': 'mumbai.jpg',
+    # 'Chennai': 'chennai.jpg',
 }
 
 
@@ -151,9 +173,10 @@ def predict():
     else:
         suggested_airline = "Vistara"
 
-    # Determine the image filename based on the destination city
-    # Use .get() with a default value to handle cases where a city might not have a corresponding image
-    destination_image_filename = destination_images.get(destination, 'default_image.jpg') # 'default_image.jpg' is a placeholder for an image to use if the city is not found in the dictionary
+    # Determine the image filenames based on the source and destination cities
+    # Use .get() with a default value for robustness
+    departure_image_filename = destination_images.get(source, 'default_image.jpg') # Get image for source city
+    destination_image_filename = destination_images.get(destination, 'default_image.jpg') # Get image for destination city
 
 
     # Render the results template
@@ -161,8 +184,11 @@ def predict():
         'results.html',
         predicted_price=f"{final_predicted_price:.2f}", # Format to 2 decimal places
         holiday_message=holiday_message,
-        suggested_airline=suggested_airline,
-        destination_image=destination_image_filename # Pass the image filename to the template
+        suggested_airline=suggested_airline, # Pass suggested_airline to the template
+        departure_city_name=source, # Pass city names for text
+        destination_city_name=destination, # Pass city names for text
+        departure_image=departure_image_filename, # Pass departure image filename
+        destination_image=destination_image_filename # Pass destination image filename
     )
 
 
