@@ -8,6 +8,14 @@
         @import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital@1&display=swap');
     </style>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Optional: Add some basic styling for the return date div */
+        .return-date-section {
+            margin-top: 15px;
+            border-top: 1px solid #ccc;
+            padding-top: 15px;
+        }
+    </style>
 </head>
 <body>
     <h1>Predict Flight Price</h1>
@@ -49,43 +57,132 @@
                     <input type="datetime-local" id="departure_datetime" name="departure_datetime" required>
                 </div>
                 <br>
+
+                {# --- Round Trip Checkbox (Moved Up) --- #}
                  <div>
-                    <label for="arrival_datetime">Arrival Date and Time (YYYY-MM-DD HH:MM):</label>
-                    <input type="datetime-local" id="arrival_datetime" name="arrival_datetime" required>
+                    <label for="is_round_trip">Round Trip:</label>
+                    <input type="checkbox" id="is_round_trip" name="is_round_trip" value="yes">
                 </div>
                 <br>
-                <div>
-                    <label for="total_stops">Total Stops (0 for non-stop):</label>
-                    <input type="number" id="total_stops" name="total_stops" min="0" required>
+
+                {# --- Return Date and Time Input (Initially Hidden) --- #}
+                <div id="returnDateSection" class="return-date-section" style="display: none;"> {# Added ID and initial style #}
+                    <label for="return_datetime">Return Date and Time (YYYY-MM-DD HH:MM):</label>
+                    <input type="datetime-local" id="return_datetime" name="return_datetime"> {# Name changed to return_datetime #}
                 </div>
                 <br>
-                <button type="submit">Predict Price</button>
-            </form>
-        </div>
+
+                {# Removed Arrival Date and Time input #}
+               {# <div>
+                   <label for="arrival_datetime">Arrival Date and Time (YYYY-MM-DD HH:MM):</label>
+                   <input type="datetime-local" id="arrival_datetime" name="arrival_datetime" required>
+               </div>
+               <br> #}
+
+               <div>
+                   <label for="total_stops">Total Stops (0 for non-stop):</label>
+                   <input type="number" id="total_stops" name="total_stops" min="0" required>
+               </div>
+               <br>
+
+               {# --- Input Fields for Price Breakdown (relevant for new logic) --- #}
+
+               <div>
+                   <label>Luggage Option:</label><br>
+                   <input type="radio" id="luggage_none" name="luggage_option" value="none" checked>
+                   <label for="luggage_none">None (Carry-on only)</label><br>
+                   <input type="radio" id="luggage_checked" name="luggage_option" value="checked">
+                   <label for="luggage_checked">Checked Luggage</label><br>
+                   <input type="radio" id="luggage_extra" name="luggage_option" value="extra"> {# Corrected name attribute here #}
+                   <label for="luggage_extra">Extra Luggage</label><br>
+               </div>
+               <br>
+
+               <div>
+                   <label>Seat Preference:</label><br>
+                   <input type="radio" id="seat_economy" name="seat_preference" value="economy" checked>
+                   <label for="seat_economy">Economy Class</label><br>
+                   <input type="radio" id="seat_business" name="seat_business" value="business">
+                   <label for="seat_business">Business Class</label><br>
+                   <input type="radio" id="seat_first" name="seat_preference" value="first">
+                   <label for="seat_first">First Class</label><br>
+                   {# Add other classes like premium economy if needed #}
+               </div>
+               <br>
+
+               {# --- End of New Input Fields --- #}
+
+               <button type="submit">Predict Price</button>
+           </form>
+       </div>
 
 
-        <!-- Container for toggling images (Right side) -->
-        <div class="homepage-images-container">
-            <img src="{{ url_for('static', filename='images/plane.jpg') }}" alt="Image of plane" class="homepage-image active">
-            <img src="{{ url_for('static', filename='images/new_delhi.jpg') }}" alt="Image of New Delhi" class="homepage-image">
-            <img src="{{ url_for('static', filename='images/kolkata.jpg') }}" alt="Image of Kolkata" class="homepage-image">
-            <img src="{{ url_for('static', filename='images/banglore.jpg') }}" alt="Image of Bangalore" class="homepage-image">
-            <img src="{{ url_for('static', filename='images/cochin.jpg') }}" alt="Image of Cochin" class="homepage-image">
-            <img src="{{ url_for('static', filename='images/delhi.jpg') }}" alt="Image of Delhi" class="homepage-image">
-            <img src="{{ url_for('static', filename='images/hyderabad.jpg') }}" alt="Image of Hyderabad" class="homepage-image">
-            <!-- Add more <img> tags here for each homepage image you have -->
-        </div>
+       <!-- Container for toggling images (Right side) -->
+       <div class="homepage-images-container">
+           <img src="{{ url_for('static', filename='images/plane.jpg') }}" alt="Image of plane" class="homepage-image active">
+           <img src="{{ url_for('static', filename='images/new_delhi.jpg') }}" alt="Image of New Delhi" class="homepage-image">
+           <img src="{{ url_for('static', filename='images/kolkata.jpg') }}" alt="Image of Kolkata" class="homepage-image">
+           <img src="{{ url_for('static', filename='images/banglore.jpg') }}" alt="Image of Bangalore" class="homepage-image">
+           <img src="{{ url_for('static', filename='images/cochin.jpg') }}" alt="Image of Cochin" class="homepage-image">
+           <img src="{{ url_for('static', filename='images/delhi.jpg') }}" alt="Image of Delhi" class="homepage-image">
+           <img src="{{ url_for('static', filename='images/hyderabad.jpg') }}" alt="Image of Hyderabad" class="homepage-image">
+           <!-- Add more <img> tags here for each homepage image you have -->
+       </div>
 
-    </div> <!-- End of main-content-wrapper -->
+   </div> <!-- End of main-content-wrapper -->
 
 
-    <div class="team-info">
-        <p>Made By <span class="neon-green">Tanmoy Chowdhury, Joysurya Bhowmik, Suman Shit, Snehlata K.</span> with &hearts;</p>
-        <p>Dept. of CSE(AI & ML), Bengal Institute of Technology</p>
-    </div>
+   <div class="team-info">
+       <p> ©2025-Made By <span class="neon-green">Tanmoy Chowdhury</span> with &hearts;</p>
+       <p>Dept. of CSE(AI & ML), Bengal Institute of Technology</p>
+   </div>
 
-    <!-- Link to your JavaScript file -->
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+   <script>
+       // JavaScript for toggling images (if you have this functionality)
+       const images = document.querySelectorAll('.homepage-image');
+       let currentImageIndex = 0;
 
+       function showNextImage() {
+           // Check if images collection is valid before accessing elements
+           if (images && images.length > 0) {
+               images[currentImageIndex].classList.remove('active');
+               currentImageIndex = (currentImageIndex + 1) % images.length;
+               images[currentImageIndex].classList.add('active');
+           }
+       }
+
+       // Start the slideshow - change image every 5 seconds (adjust as needed)
+       // Check if images collection is valid before starting interval
+       if (images && images.length > 0) {
+            setInterval(showNextImage, 3000); // Adjusted interval slightly
+            // Initially show the first image
+            images[currentImageIndex].classList.add('active');
+       }
+
+
+       // --- JavaScript to show/hide Return Date based on Round Trip checkbox ---
+       const roundTripCheckbox = document.getElementById('is_round_trip');
+       const returnDateSection = document.getElementById('returnDateSection');
+       const returnDatetimeInput = document.getElementById('return_datetime');
+
+       // Function to toggle the visibility and required attribute of the return date input
+       function toggleReturnDateInput() {
+           if (roundTripCheckbox.checked) {
+               returnDateSection.style.display = 'block'; // Show the div
+               returnDatetimeInput.required = true; // Make the input required
+           } else {
+               returnDateSection.style.display = 'none'; // Hide the div
+               returnDatetimeInput.required = false; // Make the input not required
+               returnDatetimeInput.value = ''; // Clear the value when hidden
+           }
+       }
+
+       // Add event listener to the round trip checkbox
+       roundTripCheckbox.addEventListener('change', toggleReturnDateInput);
+
+       // Call the function once on page load to set initial state based on checkbox (if it's pre-checked)
+       toggleReturnDateInput();
+
+   </script>
 </body>
 </html>
