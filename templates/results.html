@@ -49,12 +49,12 @@
     <div class="result-container">
         <h2>Your Prediction:</h2>
 
-        {# --- Restore the separate holiday message using a loop check --- #}
+        {# --- Restore the separate holiday message using a loop and flag --- #}
         {% set holiday_hike_found = false %}
         {% for adjustment in adjustment_details %}
             {% if 'Holiday Hike' in adjustment['Description'] %} {# Check if the description contains 'Holiday Hike' #}
                 {% set holiday_hike_found = true %}
-                {% break %} {# Stop looping once found #}
+                {# Removed the invalid 'break' tag #}
             {% endif %}
         {% endfor %}
 
@@ -136,9 +136,10 @@
     <a href="/">Go back to the predictor</a>
 
     <div class="team-info">
-        <p>©2025-Made By <span class="neon-green">Tanmoy Chowdhury</span> with &hearts;</p>
+        <p>©2025-Made By <span class="neon-green">Tanmoy Chowdhury, Joysurya Bhowmik, Suman Shit, Snehlata K.</span> with &hearts;</p>
         <p>Dept. of CSE(AI & ML), Bengal Institute of Technology</p>
     </div>
+
 
     <!-- Link to your JavaScript file -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
