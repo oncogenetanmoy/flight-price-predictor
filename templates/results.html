@@ -21,7 +21,6 @@
         </div>
 
         <div class="journey-arrow">
-             <!-- You could add an arrow icon or text here later -->
              &rarr; <!-- HTML entity for a right arrow -->
         </div>
 
@@ -35,14 +34,101 @@
     <!-- More sophisticated journey text -->
     <p class="journey-description">Your predicted journey is from **{{ departure_city_name }}** to **{{ destination_city_name }}**.</p>
 
+    {# Display Departure Date and Time #}
+    <p class="journey-details">Departure Date and Time: <strong>{{ request.form['departure_datetime'] }}</strong></p> {# Using request.form['departure_datetime'] directly or pass formatted string from app.py #}
+
+    {# --- Conditionally Display Return Date and Time if Round Trip and return_datetime is not None --- #}
+    {% if is_round_trip and return_datetime is not none %} {# Explicitly check if return_datetime is not none #}
+        <p class="journey-details">Return Date and Time: <strong>{{ return_datetime.strftime('%Y-%m-%d %H:%M') }}</strong></p> {# Format the datetime object for display #}
+    {% elif is_round_trip %}
+         <p class="journey-details" style="color: red;">Return Date and Time: (Not provided or invalid)</p> {# Handle case where round trip was checked but date wasn't valid or parsed #}
+    {% endif %}
+    {# --- End of Conditional Display --- #}
+
 
     <div class="result-container">
-        <p class="result-text">Predicted Price: ₹{{ predicted_price }}</p>
-        {% if holiday_message %}
-            <p class="result-text">{{ holiday_message }}</p>
+        <h2>Your Prediction:</h2>
+
+        {# --- Restore the separate holiday message using a loop check --- #}
+        {% set holiday_hike_found = false %}
+        {% for adjustment in adjustment_details %}
+            {% if 'Holiday Hike' in adjustment['Description'] %} {# Check if the description contains 'Holiday Hike' #}
+                {% set holiday_hike_found = true %}
+                {% break %} {# Stop looping once found #}
+            {% endif %}
+        {% endfor %}
+
+        {% if holiday_hike_found %}
+             <p class="result-text" style="color: red;">Attention! Your departure date falls on a holiday. Price may be higher than usual.</p>
         {% endif %}
-        <p class="result-text">Suggested Airline: {{ suggested_airline }}</p>
+        {# --- End of Restored Holiday Message --- #}
+
+
+        <p class="result-text">Base Predicted Price (from Model, One-Way Economy): <strong>₹ {{ base_predicted_price }}</strong></p> {# Updated text for clarity #}
+
+        {% if adjustment_details %}
+            <h3>Adjustments:</h3>
+            <ul>
+                {% for adjustment in adjustment_details %}
+                    <li>{{ adjustment['Description'] }}: {{ adjustment['Amount'] }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p class="result-text">Final Predicted Price: <strong>₹ {{ final_predicted_price }}</strong></p>
+        <p class="result-text">Suggested Airline Category: <strong>{{ suggested_airline }}</strong></p>
+
+
     </div>
+
+    <h2>Comparison Prices:</h2> {# Changed heading to be more general #}
+
+    {# Display the best, average, and highest prices from YOUR DATASET #}
+    <div class="dataset-price-summary">
+        <h3>Price Summary from Your Dataset for this Route:</h3>
+        {% if normal_best_price != 'N/A' %} {# Check if summary stats were calculated #}
+            <p>Best Price Found in Dataset: <strong>{{ normal_best_price }}</strong></p> {# Updated text #}
+            <p>Average Price Found in Dataset: <strong>{{ normal_average_price }}</strong></p> {# Updated text #}
+            <p>Highest Price Found in Dataset: <strong>{{ normal_highest_price }}</strong></p> {# Updated text #}
+        {% else %}
+            <p>No price summary available for this route in your dataset.</p>
+        {% endif %}
+    </div>
+
+
+    {# Display the scraped Skyscanner flights table (will show dummy data unless scraping is implemented) #}
+    <div class="skyscanner-scraped-data"> {# Added a div for styling #}
+        <h3>Live Skyscanner Options (Placeholder):</h3> {# Updated heading #}
+        {% if scraped_flights %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Airline</th>
+                        <th>Departure Time</th>
+                        <th>Arrival Time</th>
+                        <th>Duration</th>
+                        <th>Total Stops</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for flight in scraped_flights %}
+                        <tr>
+                            <td>{{ flight['Airline'] }}</td>
+                            <td>{{ flight['Departure Time'] }}</td>
+                            <td>{{ flight['Arrival Time'] }}</td>
+                            <td>{{ flight['Duration'] }}</td>
+                            <td>{{ flight['Total Stops'] }}</td>
+                            <td>{{ flight['Price'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Could not retrieve flight options from Skyscanner for this search (using placeholder data).</p>
+        {% endif %}
+    </div>
+
 
     <p class="happy-journey">Happy Journey!</p>
 
@@ -50,9 +136,12 @@
     <a href="/">Go back to the predictor</a>
 
     <div class="team-info">
-        <p>Made By <span class="neon-green">Tanmoy Chowdhury, Joysurya Bhowmik, Suman Shit, Snehlata K.</span> with &hearts;</p>
+        <p>©2025-Made By <span class="neon-green">Tanmoy Chowdhury</span> with &hearts;</p>
         <p>Dept. of CSE(AI & ML), Bengal Institute of Technology</p>
     </div>
+
+    <!-- Link to your JavaScript file -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
 </body>
 </html>
