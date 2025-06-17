@@ -8,7 +8,7 @@ body {
     line-height: 1.6;
     margin: 0; /* Remove default body margin */
     padding: 20px; /* Add padding instead of margin for content */
-    background-color: #FFFFFF; /* White background */
+    background-color: #ffffff; /* White background */
     color: #333; /* Dark gray text color for contrast */
     /* text-align: center;  Remove center alignment from body */
 }
@@ -99,7 +99,8 @@ label {
 /* Style form input fields */
 input[type="text"],
 input[type="datetime-local"],
-input[type="number"] {
+input[type="number"],
+select { /* Added select to style dropdowns */
     width: calc(100% - 20px); /* Adjust width to account for padding */
     padding: 10px;
     margin-bottom: 15px; /* Adjusted margin */
@@ -110,6 +111,20 @@ input[type="number"] {
     background-color: #fff; /* White input background */
     color: #333; /* Dark text in input fields */
 }
+
+/* Style for radio button and checkbox labels */
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 5px; /* Add space between radio/checkbox and label */
+}
+
+input[type="radio"] + label,
+input[type="checkbox"] + label {
+     font-weight: normal; /* Reset font-weight if needed */
+     display: inline-block; /* Allow labels to be next to radio/checkbox */
+     margin-bottom: 8px; /* Adjusted margin */
+}
+
 
 /* Style the submit button */
 button[type="submit"] {
@@ -166,13 +181,12 @@ button[type="submit"]:hover {
     border: 1px solid #8A2BE2; /* Blue Violet border */
 }
 
-
 /* Style for the results page paragraphs */
 /* Result text should be neon green */
 .result-text {
     font-size: 1.3em; /* Increased font size */
     margin-bottom: 15px; /* Adjusted margin */
-    text-align: center; /* Center the result text */
+    /* text-align: center;  Remove center alignment from here if parent is centered */
     color: #00FF00; /* Neon Green */
     font-weight: bold;
 }
@@ -201,7 +215,6 @@ button[type="submit"]:hover {
     text-align: center; /* Ensure text is centered if it's a block element */
     width: 100%; /* Take full width if display is block */
 }
-
 
 /* Keyframes for the waving animation */
 @keyframes wave {
@@ -311,21 +324,330 @@ a:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Style for the arrow between cities */
-.journey-arrow {
-    font-size: 3em; /* Make the arrow large */
-    color: #8A2BE2; /* Blue Violet color for the arrow */
+/* Basic body styling */
+body {
+    font-family: "STIX Two Text", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 20px; /* Adjusted base font size for better readability */
+    line-height: 1.6;
+    margin: 0; /* Remove default body margin */
+    padding: 20px; /* Add padding instead of margin for content */
+    background-color: #ffffff; /* White background */
+    color: #333; /* Dark gray text color for contrast */
+    /* text-align: center;  Remove center alignment from body */
+}
+
+/* Center main headings */
+h1 {
+    text-align: center; /* Keep main heading centered */
+    color: #8A2BE2; /* Blue Violet */
+    font-size: 60px;
+    margin-bottom: 30px; /* Add space below heading */
+}
+
+/* Add a class to a wrapper around your form and city list */
+/* In index.html, wrap your .city-list and form in <div class="main-content-wrapper">...</div> */
+.main-content-wrapper {
+    display: flex; /* Use Flexbox to arrange children (content and images) side-by-side */
+    justify-content: space-between; /* Put space between the content and image container */
+    max-width: 1200px; /* Optional: Limit the maximum width of the content area */
+    margin: 20px auto; /* Center the wrapper if max-width is set */
+    gap: 40px; /* Add space between the content and image container */
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+}
+
+/* Adjust margins for the blocks within the wrapper */
+/* Assuming your form and city list are direct children or wrapped in a div like in the index.html I provided */
+.city-list, form, .main-content-wrapper > div {
+    margin: 0; /* Remove previous margins */
+    flex: 1; /* Allow these items to grow and shrink */
+    min-width: 300px; /* Ensure they don't get too small */
+}
+
+/* Style for the homepage images container */
+.homepage-images-container {
+    width: 400px; /* Set a fixed width for the image container */
+    height: 300px; /* Set a fixed height (adjust as needed) */
+    position: relative; /* Required for absolute positioning of images */
+    overflow: hidden; /* Hide parts of images that exceed the container */
+    border: 3px solid #8A2BE2; /* Add a border (matching your theme) */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.5); /* Add a shadow */
+    margin-left: auto; /* Push the container to the right when in a flex container */
+}
+
+/* Style for the individual homepage images */
+.homepage-image {
+    width: 100%; /* Make image fill the container width */
+    height: 100%; /* Make image fill the container height */
+    object-fit: cover; /* Cover the container without distorting aspect ratio */
+    position: absolute; /* Position images relative to the container */
+    top: 0;
+    left: 0;
+    opacity: 0; /* Initially hide all images using opacity */
+    transition: opacity 1s ease-in-out; /* Add a fade transition */
+}
+
+/* Style for the active (visible) homepage image */
+.homepage-image.active {
+    opacity: 1; /* Make the active image visible */
+}
+
+/* Style for hidden images (optional, using opacity and display for fallback) */
+/* .homepage-image.hidden {
+    display: none; /* Alternative way to hide, less smooth for transitions */
+/* } */
+
+/* Style the form container */
+form {
+    max-width: 500px;
+    margin: 20px 0; /* Align to the left, remove auto */
+    padding: 30px; /* Increased padding */
+    background-color: rgba(138, 43, 226, 0.1); /* Distinct: Semi-transparent violet */
+    border-radius: 10px; /* Slightly larger border-radius */
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.5); /* Violet shadow */
+    border: 3px solid #8A2BE2; /* Example border - this won't be random */
+    text-align: left; /* Align form content to the left */
+}
+
+/* Style form labels */
+label {
+    display: block;
+    margin-bottom: 8px; /* Adjusted margin */
     font-weight: bold;
-    margin-bottom: 30px; /* Add some margin below the arrow if items wrap */
+    font-size: 1.2em; /* Adjusted relative size */
+    color: #8A2BE2; /* Blue Violet */
 }
 
-/* Style for the sophisticated journey description text */
-.journey-description {
-    font-size: 1.4em; /* Make the text larger */
-    text-align: center; /* Center the text */
-    margin: 20px auto; /* Add vertical margin and center */
-    max-width: 700px; /* Limit the width for readability */
-    color: #555; /* Darker color for description */
+/* Style form input fields */
+input[type="text"],
+input[type="datetime-local"],
+input[type="number"],
+select { /* Added select to style dropdowns */
+    width: calc(100% - 20px); /* Adjust width to account for padding */
+    padding: 10px;
+    margin-bottom: 15px; /* Adjusted margin */
+    border: 1px solid #ccc; /* Lighter border */
+    border-radius: 5px; /* Adjusted border-radius */
+    box-sizing: border-box;
+    font-size: 1em; /* Set font size for the text inside inputs */
+    background-color: #fff; /* White input background */
+    color: #333; /* Dark text in input fields */
 }
 
-/* --- End New Styles --- */
+/* Style for radio button and checkbox labels */
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 5px; /* Add space between radio/checkbox and label */
+}
+
+input[type="radio"] + label,
+input[type="checkbox"] + label {
+     font-weight: normal; /* Reset font-weight if needed */
+     display: inline-block; /* Allow labels to be next to radio/checkbox */
+     margin-bottom: 8px; /* Adjusted margin */
+}
+
+
+/* Style the submit button */
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 12px; /* Increased padding */
+    background-color: #8A2BE2; /* Blue Violet */
+    color: #fff; /* White text color for button */
+    border: none;
+    border-radius: 5px; /* Adjusted border-radius */
+    cursor: pointer;
+    font-size: 18px; /* Increased font size */
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+}
+
+button[type="submit"]:hover {
+    background-color: #9370DB; /* Medium Purple on hover */
+}
+
+/* Style for the city list section */
+.city-list {
+    max-width: 700px; /* Give city list more width */
+    margin: 20px 0; /* Align to the left, remove auto */
+    padding: 20px;
+    background-color: rgba(138, 43, 226, 0.1); /* Slightly transparent violet background */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.2);
+    color: #333; /* Dark color for city list text */
+    border: 1px solid #8A2BE2; /* Blue Violet border */
+    text-align: left; /* Align city list content to the left */
+}
+
+.city-list h2 {
+    color: #8A2BE2; /* Blue Violet heading for city lists */
+    font-size: 1.6em;
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 10px;
+}
+
+.city-list ul {
+    list-style: none; /* Remove default list bullets */
+    padding: 0; /* Remove default padding */
+    display: flex; /* Use flexbox for horizontal layout */
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    gap: 10px; /* Add space between list items */
+}
+
+.city-list li {
+    background-color: rgba(138, 43, 226, 0.2); /* Semi-transparent violet background for list items */
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 1em;
+    border: 1px solid #8A2BE2; /* Blue Violet border */
+}
+
+/* Style for the results page paragraphs */
+/* Result text should be neon green */
+.result-text {
+    font-size: 1.3em; /* Increased font size */
+    margin-bottom: 15px; /* Adjusted margin */
+    /* text-align: center;  Remove center alignment from here if parent is centered */
+    color: #00FF00; /* Neon Green */
+    font-weight: bold;
+}
+
+/* Style for the result container */
+.result-container {
+    max-width: 600px; /* Set a max width for the container */
+    margin: 30px auto; /* Center the container and add margin */
+    padding: 20px;
+    border: 3px solid #00FF00; /* Neon Green border */
+    border-radius: 10px;
+    background-color: rgba(0, 255, 0, 0.1); /* Semi-transparent neon green background */
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5); /* Neon Green shadow */
+    text-align: left; /* Ensure content inside is left-aligned */
+}
+
+/* Style for the Happy Journey text */
+.happy-journey {
+    font-size: 2em; /* Make the text larger */
+    font-weight: bold;
+    color: #8A2BE2; /* Blue Violet color */
+    margin-top: 40px; /* Add space above the text */
+    display: inline-block; /* Required for transform/animation */
+    animation: wave 2s infinite; /* Apply the waving animation */
+    transform-origin: 70% 70%; /* Set the origin for the wave */
+    text-align: center; /* Ensure text is centered if it's a block element */
+    width: 100%; /* Take full width if display is block */
+}
+
+/* Keyframes for the waving animation */
+@keyframes wave {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    10% {
+        transform: rotate(14deg);
+    }
+    20% {
+        transform: rotate(-8deg);
+    }
+    30% {
+        transform: rotate(14deg);
+    }
+    40% {
+        transform: rotate(-4deg);
+    }
+    50% {
+        transform: rotate(10deg);
+    }
+    60% {
+        transform: rotate(0deg);
+    }
+    70% {
+        transform: rotate(3deg);
+    }
+    80% {
+        transform: rotate(-3deg);
+    }
+    90% {
+        transform: rotate(0deg);
+    }
+}
+
+
+/* Style for the link */
+a {
+    display: block;
+    text-align: left; /* Align link to the left */
+    margin-top: 30px; /* Adjusted margin */
+    color: #8A2BE2; /* Blue Violet link */
+    text-decoration: underline; /* Ensure link is underlined */
+    font-size: 1.2em;
+}
+
+a:hover {
+    color: #9370DB; /* Medium Purple on hover */
+}
+
+/* Style for the team information block */
+.team-info {
+    margin-top: 50px; /* Add space above the block */
+    padding: 20px;
+    border: 2px solid #ccc; /* Light gray border */
+    border-radius: 8px;
+    /* background-color: #000000; */ /* Light background - removed */
+    /* color: #00FF00; */ /* Default color - removed */
+    text-align: center; /* Center the text within the block */
+    font-size: 0.9em;
+    /* Added requested styles below */
+    background-color: #8a2be2; /* Dark background */
+    color: #ffd700; /* Red font */
+}
+
+.team-info .neon-green {
+    color: #ff0000; /* Neon Green color for the names */
+    font-weight: bold;
+}
+
+/* --- New Styles for Results Page Journey Info --- */
+
+/* Container for journey images and text */
+.journey-info-container {
+    display: flex; /* Use Flexbox to arrange items side-by-side */
+    justify-content: center; /* Center the flex items horizontally */
+    align-items: center; /* Vertically align items in the center */
+    gap: 30px; /* Add space between the city blocks and the arrow */
+    margin: 30px auto; /* Center the container itself and add vertical margin */
+    max-width: 800px; /* Optional: Limit the max width */
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+}
+
+/* Container for each city's image and text */
+.city-journey {
+    text-align: center; /* Center content within each city block */
+    flex: 1; /* Allow city blocks to grow and shrink */
+    min-width: 150px; /* Ensure minimum width */
+}
+
+.city-journey h2 {
+     color: #8A2BE2; /* Blue Violet heading for city */
+     font-size: 1.8em; /* Larger heading */
+     margin-bottom: 10px;
+     margin-top: 0;
+}
+
+.city-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Style for the city images */
+.city-image {
+    max-width: 200px; /* Set a max width for the images */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
