@@ -21,9 +21,9 @@ def scrape_skyscanner_flights_selenium(origin, destination, date):
     # Since we are not focusing on Skyscanner, this data isn't strictly needed
     # for the "normal" price summary, but the function is called.
     dummy_flights_data = [
-        {'Airline': 'Dummy Airline 1', 'Departure Time': '08:00', 'Arrival Time': '10:00', 'Duration': '2h 0m', 'Total Stops': '0', 'Price': '₹ 4800'},
-        {'Airline': 'Dummy Airline 2', 'Departure Time': '09:30', 'Arrival Time': '12:00', 'Duration': '2h 30m', 'Total Stops': '1', 'Price': '₹ 6200'},
-        {'Airline': 'Dummy Airline 3', 'Departure Time': '10:00', 'Arrival Time': '13:00', 'Duration': '3h 0m', 'Total Stops': '0', 'Price': '₹ 5500'}
+        {'Airline': 'Indigo', 'Departure Time': '08:00', 'Arrival Time': '10:00', 'Duration': '2h 0m', 'Total Stops': '0', 'Price': '₹ 4800'},
+        {'Airline': 'SpiceJet', 'Departure Time': '09:30', 'Arrival Time': '12:00', 'Duration': '2h 30m', 'Total Stops': '1', 'Price': '₹ 6200'},
+        {'Airline': 'AirAsia', 'Departure Time': '10:00', 'Arrival Time': '13:00', 'Duration': '3h 0m', 'Total Stops': '0', 'Price': '₹ 5500'}
     ]
     return dummy_flights_data
 
